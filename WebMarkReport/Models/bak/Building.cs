@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebMarkReport.Model
+namespace WebMarkReport.Models
 {
     /// <summary>
     /// Строительная площадка
@@ -11,7 +11,7 @@ namespace WebMarkReport.Model
     public class Building
     {
         public List<Unit> units = new List<Unit>();
-        public Unit BuildCorpus { get; set; }
+        public Unit unit { get; set; }
 
 
         /// <summary>

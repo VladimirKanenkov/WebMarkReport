@@ -1,4 +1,4 @@
-﻿namespace WebMarkReport.Model
+﻿namespace WebMarkReport.Models
 {
     /// <summary>
     /// Секция здания

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WebMarkReport.Model
+namespace WebMarkReport.Models
 {
     /// <summary>
     /// Строящийся объект

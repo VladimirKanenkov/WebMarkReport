@@ -1,0 +1,45 @@
+﻿@model IEnumerable<WebMarkReport.Models.MarkReport>
+@{
+    Layout = "_Layout";
+}
+@{
+    ViewData["Title"] = "График производства работ";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>График производства работ</title>
+</head>
+<body>
+    <table class="table table-bordered table-dark table-striped">
+        <thead>
+            <h3> Все данные</h3>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">id корпуса</th>
+                <th scope="col">id секции в корпусе</th>
+                <th scope="col">id этажа в секции</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach (var p in Model)
+            {
+                <tr>
+                    <td>@p.Id</td>
+                    <td>@p.id_l1 </td>
+                    <td>@p.id_l2</td>
+                    <td>@p.id_sublayer1</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+    
+</body>
+
+</html>
+
+
