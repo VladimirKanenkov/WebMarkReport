@@ -12,8 +12,8 @@ namespace WebMarkReport.Models
 {
     public class XmlData
     {
-        public static List<MarkReport> reports { get; set; }
-        public static List<Structure> structures { get; set; }
+        public static List<MarkReport> reports { get; set; } = new List<MarkReport>();
+        public static List<Structure> structures { get; set; } = new List<Structure>();
 
         public static void Deserialize()
         {
@@ -35,6 +35,13 @@ namespace WebMarkReport.Models
 
                 formatter = new XmlSerializer(typeof(l3structure));
                 l3structure l3structure = (l3structure)formatter.Deserialize(reader);
+                int j = 0;
+                foreach(var item in l3structure.structures)
+                {
+                    j++;
+                    item.Id = j;
+
+                }
                 structures = l3structure.structures.ToList();
             }
 

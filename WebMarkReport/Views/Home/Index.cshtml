@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebMarkReport.Models.MarkReport>
+﻿@model WebMarkReport.Models.ViewModels.TableViewData
 @{
     Layout = "_Layout";
 }
@@ -8,38 +8,49 @@
 <!DOCTYPE html>
 <html>
 <head>
+
     <meta name="viewport" content="width=device-width" />
     <title>График производства работ</title>
 </head>
 <body>
-    <table class="table table-bordered table-dark table-striped">
+    <table class="table table-bordered table-dark table-striped table-hover">
         <thead>
-            <h3> Все данные</h3>
+            <h3>@Model.L1_name @Model.L2_name</h3>
             <tr>
-                <th scope="col">ID</th>
-                <th scope="col">id корпуса</th>
-                <th scope="col">id секции в корпусе</th>
-                <th scope="col">id этажа в секции</th>
+                <th scope="col"> </th>
+                @foreach (var p in Model.Technology_cards)
+                {
+                    <th scope="col"><div id="rotateText">@p.Value<div /></th>
+                }
             </tr>
 
         </thead>
         <tbody>
-            @foreach (var p in Model)
+            @foreach (var p in Model.Sublayer1_items.Select(k => k.Key).ToList())
             {
                 <tr>
-                    <td>@p.Id</td>
-                    <td>@p.id_l1 </td>
-                    <td>@p.id_l2</td>
-                    <td>@p.id_sublayer1</td>
+                    <td>@Model.Sublayer1_items.First(k => k.Key == p).Value</td>
+                    @*<td>@p.Id_status</td>
+                        <td>@p.Id_technology_card </td>
+                        <td>@p.Id_sublayer1</td>
+                        <td>@p.Lag_days_count</td>*@
                 </tr>
             }
         </tbody>
 
     </table>
 
-    
 </body>
 
 </html>
+
+<style type="text/css">
+    #rotateText {
+        transform: rotate(-90deg);
+        width: 300px; /* ширина блока */
+        height: 300px; /* высота блока */
+    }
+</style>
+
 
 

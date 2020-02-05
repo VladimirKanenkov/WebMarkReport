@@ -20,10 +20,31 @@ namespace WebMarkReport.Models
             {
                 XmlData.Deserialize();
                 context.Structures.AddRange(XmlData.structures);
+                context.Database.OpenConnection();
+                try
+                {
+                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.Structures ON"); //отменить автоинкремент столбца id, иначе возникает ошибка. 
+                                                                                                // Нужно для сохранения нумерации элементов в базе в соответствии с файлом xml 
+                    context.SaveChanges();
+                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.Structures OFF");
+                }
+                finally
+                {
+                    context.Database.CloseConnection();
+                }
                 context.Reports.AddRange(XmlData.reports);
-                context.SaveChanges();
+                context.Database.OpenConnection();
+                try
+                {
+                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.Reports ON");
+                    context.SaveChanges();
+                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.Reports OFF");
+                }
+                finally
+                {
+                    context.Database.CloseConnection();
+                }
             }
-
         }
     }
 }

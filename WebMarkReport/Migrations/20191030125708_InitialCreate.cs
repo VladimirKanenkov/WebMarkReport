@@ -9,20 +9,6 @@ namespace WebMarkReport.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "File",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    Path = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_File", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Reports",
                 columns: table => new
                 {
@@ -55,7 +41,7 @@ namespace WebMarkReport.Migrations
                 name: "Structures",
                 columns: table => new
                 {
-                    id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     id_l1 = table.Column<int>(nullable: false),
                     id_l2 = table.Column<int>(nullable: false),
@@ -66,15 +52,12 @@ namespace WebMarkReport.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Structures", x => x.id);
+                    table.PrimaryKey("PK_Structures", x => x.Id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "File");
-
             migrationBuilder.DropTable(
                 name: "Reports");
 

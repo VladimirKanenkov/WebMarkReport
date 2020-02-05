@@ -18,7 +18,9 @@ namespace WebMarkReport.Models
     [Serializable]
     public class Structure
     {
-        public int id { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Id { get; set; }
         public int id_l1 { get; set; }
         public int id_l2 { get; set; }
         public int id_sublayer1 { get; set; }

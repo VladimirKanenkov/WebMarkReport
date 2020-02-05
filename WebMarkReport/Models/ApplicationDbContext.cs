@@ -9,6 +9,5 @@ namespace WebMarkReport.Models
 
         public DbSet<MarkReport> Reports { get; set; }
         public DbSet<Structure> Structures { get; set; }
-        public DbSet<FileModel> File { get; set; }
     }
 }

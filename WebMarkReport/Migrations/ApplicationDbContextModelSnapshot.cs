@@ -19,21 +19,6 @@ namespace WebMarkReport.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("WebMarkReport.Models.FileModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("Path");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("File");
-                });
-
             modelBuilder.Entity("WebMarkReport.Models.MarkReport", b =>
                 {
                     b.Property<int>("id")
@@ -81,7 +66,7 @@ namespace WebMarkReport.Migrations
 
             modelBuilder.Entity("WebMarkReport.Models.Structure", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -97,7 +82,7 @@ namespace WebMarkReport.Migrations
 
                     b.Property<string>("sublayer1_name");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.ToTable("Structures");
                 });
