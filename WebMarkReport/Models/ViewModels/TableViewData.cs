@@ -9,13 +9,13 @@ namespace WebMarkReport.Models.ViewModels
     {
         public string L1_name { get; set; }
         public string L2_name { get; set; }
-        public List<Progress> WorkProgress { get; set; } = new List<Progress>();
+        public List<WorkProgress> WorkProgress { get; set; } = new List<WorkProgress>();
         public Dictionary<int, string> Technology_cards { get; set; } = new Dictionary<int, string>();
         public Dictionary<int, string> Sublayer1_items { get; set; } = new Dictionary<int, string>();
     }
 
 
-    public class Progress
+    public class WorkProgress
     {
         public int Id_sublayer1 { get; set; }
         public int Id_technology_card { get; set; }

@@ -7,48 +7,51 @@
 }
 <!DOCTYPE html>
 <html>
-<head>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>График производства работ</title>
+    </head>
+    <body>
+        <h3>@Model.L1_name @Model.L2_name</h3>
+        <table class="table table-bordered table-dark table-striped table-hover">
+            <thead>
 
-    <meta name="viewport" content="width=device-width" />
-    <title>График производства работ</title>
-</head>
-<body>
-    <table class="table table-bordered table-dark table-striped table-hover">
-        <thead>
-            <h3>@Model.L1_name @Model.L2_name</h3>
-            <tr>
-                <th scope="col"> </th>
-                @foreach (var p in Model.Technology_cards)
+            </thead>
+            <tbody>
+                @foreach (var p in Model.Sublayer1_items.Select(k => k.Key).ToList())
                 {
-                    <th scope="col"><div id="rotateText">@p.Value<div /></th>
-                }
-            </tr>
-
-        </thead>
-        <tbody>
-            @foreach (var p in Model.Sublayer1_items.Select(k => k.Key).ToList())
-            {
                 <tr>
-                    <td>@Model.Sublayer1_items.First(k => k.Key == p).Value</td>
-                    @*<td>@p.Id_status</td>
-                        <td>@p.Id_technology_card </td>
-                        <td>@p.Id_sublayer1</td>
-                        <td>@p.Lag_days_count</td>*@
+                    <td class="text-warning">@Model.Sublayer1_items.First(k => k.Key == p).Value</td>
+                    <td>@p</td>
+                    <td >2</td>
+                                @*<td>@p.Id_status</td>
+                    <td>@p.Id_technology_card </td>
+                    <td>@p.Id_sublayer1</td>
+                    <td>@p.Lag_days_count</td>*@
                 </tr>
-            }
-        </tbody>
+                }
+                <tr>
+                    <th scope="col"> </th>
+                    @foreach (var p in Model.Technology_cards)
+                    {
+                        <th class="text-warning">
+                            <div id="rotateText">@p.Value</div>
+                        </th>
+                    }
+                </tr>
+            </tbody>
+        </table>
 
-    </table>
-
-</body>
-
+    </body>
 </html>
 
 <style type="text/css">
     #rotateText {
-        transform: rotate(-90deg);
-        width: 300px; /* ширина блока */
-        height: 300px; /* высота блока */
+         /*transform-origin: 0 0;*/
+        writing-mode: vertical-lr;
+        transform: rotate(-180deg);
+        /*width: 250px; ширина блока 
+        height: 250px; высота блока */
     }
 </style>
 

@@ -55,7 +55,7 @@ namespace WebMarkReport.Controllers
             foreach (var row in ids)
             {
                 //var row = _context.Reports.Where(n => n.id == i).First();
-                data.WorkProgress.Add(new Progress()
+                data.WorkProgress.Add(new WorkProgress()
                 {
                     Accept_quantity = row.accept_quantity,
                     Id_status = row.id_status,
