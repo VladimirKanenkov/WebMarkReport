@@ -35,6 +35,11 @@ namespace WebMarkReport
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    name: null,
+                    template: "Id_l1_{_id_l1:int}/Id_l2_{_id_l2:int}",
+                    defaults: new { controller = "Home", action = "Index" }
+                );
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });

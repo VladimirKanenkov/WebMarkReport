@@ -22,9 +22,9 @@ namespace WebMarkReport.Controllers
             _appEnvironment = appEnvironment;          
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int _id_l1 = 2, int _id_l2 = 4)
         {
-            TableViewData data = GetTable(2, 4);
+            TableViewData data = GetTable(_id_l1, _id_l2);
             return View(data);
 
         }
