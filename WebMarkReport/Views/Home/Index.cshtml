@@ -1,58 +1,120 @@
 ﻿@model WebMarkReport.Models.ViewModels.TableViewData
-@{
-    Layout = "_Layout";
-}
+
 @{
     ViewData["Title"] = "График производства работ";
 }
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width" />
-        <title>График производства работ</title>
-    </head>
-    <body>
-        <h3>@Model.L1_name @Model.L2_name</h3>
-        <table class="table table-bordered table-dark table-striped table-hover">
-            <thead>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>График производства работ</title>
+</head>
+<body>
+    <table class="table table-bordered table-dark table-striped table-hover">
+        <thead>
+            <tr>
+                <th colspan=@(Model.Technology_cards.Count + 1) class="text-center">
+                    <h2>
+                        @Model.L1_name @Model.L2_name
+                    </h2>
+                </th>
+            </tr>
+        </thead>
 
-            </thead>
-            <tbody>
-                @foreach (var p in Model.Sublayer1_items.Select(k => k.Key).ToList())
-                {
+        <tbody>
+            @foreach (var p in Model.Sublayer1_items.Select(k => k.Key).ToList())
+            {
                 <tr>
-                    <td class="text-warning">@Model.Sublayer1_items.First(k => k.Key == p).Value</td>
-                    <td>@p</td>
-                    <td >2</td>
-                                @*<td>@p.Id_status</td>
-                    <td>@p.Id_technology_card </td>
-                    <td>@p.Id_sublayer1</td>
-                    <td>@p.Lag_days_count</td>*@
-                </tr>
-                }
-                <tr>
-                    <th scope="col"> </th>
-                    @foreach (var p in Model.Technology_cards)
+                    <th>
+                        @Model.Sublayer1_items.First(k => k.Key == p).Value
+                    </th>
+                    @foreach (var c in Model.Technology_cards)
                     {
-                        <th class="text-warning">
-                            <div id="rotateText">@p.Value</div>
-                        </th>
+                        int status = Model.WorkProgress.First(n => n.Id_technology_card == c.Key).Id_status;
+                        int? lagDaysCount = null;
+                        string acceptQuantity = "";
+                        string strColor = "";
+
+                        @if (status == 1)
+                        {
+                            strColor = "bg-success";
+                            lagDaysCount = null;
+                        }
+                        else if (status == 2)
+                        {
+                            strColor = "bg-warning";
+                            acceptQuantity = Model.WorkProgress.First(n => n.Id_technology_card == c.Key).Accept_quantity.ToString() + "%";
+                        }
+                        else if (status == 3)
+                        {
+                            strColor = "bg-danger";
+                            lagDaysCount = Model.WorkProgress.First(n => n.Id_technology_card == c.Key).Lag_days_count;
+                        }
+
+                        <td class="text-center @strColor">
+                            @lagDaysCount
+                            @acceptQuantity
+                        </td>
                     }
                 </tr>
-            </tbody>
-        </table>
-
-    </body>
+            }
+            <tr>
+                <th scope="col"> </th>
+                @foreach (var p in Model.Technology_cards)
+                {
+                    <th>
+                        <div id="rotateText">@p.Value</div>
+                    </th>
+                }
+            </tr>
+        </tbody>
+    </table>
+</body>
 </html>
 
 <style type="text/css">
     #rotateText {
-         /*transform-origin: 0 0;*/
+        /*transform-origin: 0 0;*/
         writing-mode: vertical-lr;
         transform: rotate(-180deg);
-        /*width: 250px; ширина блока 
+        /*width: 250px; ширина блока
         height: 250px; высота блока */
     }
+
+    #colHiglighting {
+        table
+        {
+            overflow: hidden;
+        }
+
+        td, th {
+            position: relative;
+        }
+
+        td:hover::after,
+        th:hover::after {
+            content: "";
+            position: absolute;
+            background-color: rgba(0,0,0,0.075);
+            left: 0;
+            top: -5000px;
+            height: 10000px;
+            width: 100%;
+            z-index: -1;
+        }
+    }
+
+    /*#colorBgRed {
+        background-color: red
+    }
+
+    #colorBgGreen {
+        background-color: green
+    }
+
+    #colorBgYellow {
+        background-color: yellow
+    }*/
 </style>
 
 

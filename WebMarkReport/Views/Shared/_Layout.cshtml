@@ -3,7 +3,9 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" href="~/vendor.min.css" />
+    <link rel="stylesheet"
+          asp-href-include="/lib/twitter-bootstrap/**/*.min.css"
+          asp-href-exclude="**/*-reboot*,**/*-grid*" />
     <title>@ViewBag.Title</title>
 </head>
 <body>
