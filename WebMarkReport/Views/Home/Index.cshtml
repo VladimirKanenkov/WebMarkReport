@@ -24,47 +24,54 @@
         <tbody>
             @foreach (var p in Model.Sublayer1_items.Select(k => k.Key).ToList())
             {
-                <tr>
-                    <th>
-                        @Model.Sublayer1_items.First(k => k.Key == p).Value
-                    </th>
-                    @foreach (var c in Model.Technology_cards)
+            <tr>
+                <th>
+                    @Model.Sublayer1_items.First(k => k.Key == p).Value
+                </th>
+                @{
+                    int status;
+                }
+                @foreach (var c in Model.Technology_cards)
+                {
+                    status = Model.WorkProgress.First(n => n.Id_technology_card == c.Key).Id_status;
+                    @if (status == 1)
                     {
-                        int status = Model.WorkProgress.First(n => n.Id_technology_card == c.Key).Id_status;
-                        int? lagDaysCount = null;
-                        string acceptQuantity = "";
-                        string strColor = "";
-
-                        @if (status == 1)
-                        {
-                            strColor = "bg-success";
-                            lagDaysCount = null;
-                        }
-                        else if (status == 2)
-                        {
-                            strColor = "bg-warning";
-                            acceptQuantity = Model.WorkProgress.First(n => n.Id_technology_card == c.Key).Accept_quantity.ToString() + "%";
-                        }
-                        else if (status == 3)
-                        {
-                            strColor = "bg-danger";
-                            lagDaysCount = Model.WorkProgress.First(n => n.Id_technology_card == c.Key).Lag_days_count;
-                        }
-
-                        <td class="text-center @strColor">
-                            @lagDaysCount
-                            @acceptQuantity
+                        <td class="text-center bg-success">
                         </td>
                     }
-                </tr>
+                    else if (status == 2)
+                    {
+                        <td class="text-center bg-warning">
+                            @Model.WorkProgress.First(n => n.Id_technology_card == c.Key).Accept_quantity.ToString()%
+                        </td>
+                    }
+                    else if (status == 3)
+                    {
+                        <td class="text-center bg-danger ">
+                            @Model.WorkProgress.First(n => n.Id_technology_card == c.Key).Lag_days_count
+                        </td>
+                    }
+
+                }
+            </tr>
             }
             <tr>
                 <th scope="col"> </th>
+                @{ string coloumnColor = "colorOdd";}
+
                 @foreach (var p in Model.Technology_cards)
                 {
-                    <th>
+                    <th class= @coloumnColor>
                         <div id="rotateText">@p.Value</div>
                     </th>
+                    @if (coloumnColor == "colorOdd")
+                    {
+                        coloumnColor = "colorEven";
+                    }
+                    else
+                    {
+                        coloumnColor = "colorOdd";
+                    }
                 }
             </tr>
         </tbody>
@@ -81,41 +88,19 @@
         height: 250px; высота блока */
     }
 
-    #colHiglighting {
-        table
-        {
-            overflow: hidden;
-        }
-
-        td, th {
-            position: relative;
-        }
-
-        td:hover::after,
-        th:hover::after {
-            content: "";
-            position: absolute;
-            background-color: rgba(0,0,0,0.075);
-            left: 0;
-            top: -5000px;
-            height: 10000px;
-            width: 100%;
-            z-index: -1;
-        }
+    .colorOdd
+    {
+        background-color: #343a40;
     }
 
-    /*#colorBgRed {
-        background-color: red
+    .colorEven
+    {
+        background-color: rgba(255, 255, 255, 0.05);
     }
-
-    #colorBgGreen {
-        background-color: green
-    }
-
-    #colorBgYellow {
-        background-color: yellow
-    }*/
 </style>
+
+
+
 
 
 
