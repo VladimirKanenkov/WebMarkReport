@@ -14,40 +14,38 @@ namespace WebMarkReport.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        private readonly IHostingEnvironment _appEnvironment;
-        public HomeController(ApplicationDbContext context, IHostingEnvironment appEnvironment)
+        private readonly ApplicationDbContext context;
+        private readonly IHostingEnvironment appEnvironment;
+        public HomeController(ApplicationDbContext _context, IHostingEnvironment _appEnvironment)
         {
-            _context = context;
-            _appEnvironment = appEnvironment;          
+            this.context = _context;
+            this.appEnvironment = _appEnvironment;          
         }
 
-        public IActionResult Index(int _id_l1 = 2, int _id_l2 = 4)
+        public IActionResult Index(int buildingId = 2, int sectionId = 4)
         {
-            TableViewData data = GetTable(_id_l1, _id_l2);
-            return View(data);
-
+            return View(GetTable(buildingId, sectionId));
         }
 
         /// <summary>
         /// Получение данных из базы для отображения 
         /// </summary>
-        /// <param name="_id_l1"></param>
-        /// <param name="_id_l2"></param>
+        /// <param name="buildingId"></param>
+        /// <param name="sectionId"></param>
         /// <returns></returns>
-        TableViewData GetTable(int _id_l1, int _id_l2)
+        TableViewModel GetTable(int buildingId, int sectionId)
         {
-            TableViewData data = new TableViewData
+            TableViewModel tableData = new TableViewModel
             {
-                L1_name = _context.Structures.First(n => n.id_l1 == _id_l1).l1_name,
-                L2_name = _context.Structures.First(n => n.id_l2 == _id_l2).l2_name
+                L1_name = context.Structures.First(n => n.id_l1 == buildingId).l1_name,
+                L2_name = context.Structures.First(n => n.id_l2 == sectionId).l2_name
             };
-            var ids = _context.Reports.Where(n => (n.id_l1 == _id_l1) && (n.id_l2 == _id_l2));//все строки для выборки данных в таблицу
-            data.Technology_cards = ids.
-                DistinctBy(n=>n.id_technology_card).
+            var ids = context.Reports.Where(n => (n.id_l1 == buildingId) && (n.id_l2 == sectionId));//все строки для выборки данных в таблицу
+            tableData.Technology_cards = ids.
+                DistinctBy(n => n.id_technology_card).
                 ToDictionary(k => k.id_technology_card, v => v.technology_card_name); //использую MoreLinq DistinctBy
-            data.Sublayer1_items = _context.Structures.
-                Where(n => (n.id_l1 == _id_l1) && (n.id_l2 == _id_l2)).
+            tableData.Sublayer1_items = context.Structures.
+                Where(n => (n.id_l1 == buildingId) && (n.id_l2 == sectionId)).
                 DistinctBy(n => n.id_sublayer1).
                 OrderByDescending(n => n.Id).
                 ToDictionary(k => k.id_sublayer1, v => v.sublayer1_name);
@@ -55,7 +53,7 @@ namespace WebMarkReport.Controllers
             foreach (var row in ids)
             {
                 //var row = _context.Reports.Where(n => n.id == i).First();
-                data.WorkProgress.Add(new WorkProgress()
+                tableData.WorkProgress.Add(new WorkProgress()
                 {
                     Accept_quantity = row.accept_quantity,
                     Id_status = row.id_status,
@@ -64,7 +62,7 @@ namespace WebMarkReport.Controllers
                     Lag_days_count = row.lag_days_count
                 });
             }
-            return data;
+            return tableData;
         }
 
         /*[HttpPost]

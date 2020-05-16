@@ -36,18 +36,13 @@ namespace WebMarkReport
             {
                 routes.MapRoute(
                     name: null,
-                    template: "Id_l1_{_id_l1:int}/Id_l2_{_id_l2:int}",
+                    template: "Id_l1_{buildingId:int}/Id_l2_{sectionId:int}",
                     defaults: new { controller = "Home", action = "Index" }
                 );
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
-            /*app.Run(async (context) =>
-            {
-                await context.Response.WriteAsync("Hello World!");
-            });*/
 
             SeedData.EnsurePopulated(app);
         }

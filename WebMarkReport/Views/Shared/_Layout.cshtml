@@ -9,8 +9,13 @@
     <title>@ViewBag.Title</title>
 </head>
 <body>
-    <div>
-        @RenderBody()
+    <div class="row m-1 p-1">
+        <div id="categories" class="col-1">
+            @await Component.InvokeAsync("NavigationMenu")
+        </div>
+        <div class="col-11">
+            @RenderBody()
+        </div>
     </div>
     <script src="~/vendor.min.js"></script>
 </body>

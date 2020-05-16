@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WebMarkReport.Models.ViewModels
 {
-    public class TableViewData
+    public class TableViewModel
     {
         public string L1_name { get; set; }
         public string L2_name { get; set; }

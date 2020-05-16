@@ -18,7 +18,7 @@ namespace WebMarkReport.Models
         public static void Deserialize()
         {
             XmlReaderSettings settings = new XmlReaderSettings();
-            settings.ConformanceLevel = ConformanceLevel.Fragment; //чтение неправильного xml с двумя корнями по фрагментам
+            settings.ConformanceLevel = ConformanceLevel.Fragment; //чтение "неправильного" xml с двумя корнями по фрагментам
 
             XmlDocument xDoc = new XmlDocument();
             XmlDocumentFragment xDocFrag = xDoc.CreateDocumentFragment();
