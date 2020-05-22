@@ -1,15 +1,17 @@
-﻿@model IEnumerable<string>
+﻿@model IEnumerable<Building>
 
-@foreach (string category in Model)
+@foreach (var category in Model)
 {
     <a class="btn btn-block
-       @(category == ViewBag.SelectedCategory ? "btn-primary": "btn-secondary")"
+       @(category?.Id_l1.ToString() == ViewBag.BuildingId &&
+        category?.Id_l2.ToString() == ViewBag.SectionId
+        ? "btn-primary": "btn-secondary")"
        asp-action="Index"
        asp-controller="Home"
-       asp-route-buildingId="2"
-       asp-route-sectionId="4">
-        @(category.Substring(0, category.IndexOf("::")))
+       asp-route-buildingId=@(category.Id_l1)
+       asp-route-sectionId=@(category.Id_l2)>
+        @(category.L1_name)
         <br>
-        @(category.Substring(category.IndexOf("::")+2))    
+        @(category.L2_name)    
     </a>
 }

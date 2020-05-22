@@ -40,7 +40,7 @@ namespace WebMarkReport
                     defaults: new { controller = "Home", action = "Index" }
                 );
                 routes.MapRoute(
-                    name: "default",
+                    name: null,
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 

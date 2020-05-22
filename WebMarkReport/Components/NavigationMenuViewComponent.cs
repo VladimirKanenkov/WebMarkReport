@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using WebMarkReport.Models.ViewModels;
 using WebMarkReport.Models;
+using System.Collections.Generic;
 
 namespace WebMarkReport.Components
 {
@@ -15,16 +17,12 @@ namespace WebMarkReport.Components
 
         public IViewComponentResult Invoke()
         {
-            ViewBag.SelectedCategory = RouteData?.Values["category"];
-            return View(context.Structures
-                .Select(x => x.l1_name + "::" + x.l2_name)
-                .Distinct()
-                .OrderBy(x => x));
-            /*context.Products
-            .Select(x => x.Category)
-            .Distinct()
-            .OrderBy(x => x));*/
-            //return "Hello from the Nav View Component";
+            ViewBag.BuildingId = RouteData?.Values["buildingId"];
+            ViewBag.SectionId = RouteData?.Values["sectionId"];
+            NavigationViewModel nav = new NavigationViewModel(context.Structures);
+
+            return View(nav.NoduplicatesBuildings);      
+
         }
     }
 }

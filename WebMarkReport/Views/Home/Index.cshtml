@@ -24,45 +24,51 @@
         <tbody>
             @foreach (var p in Model.Sublayer1_items.Select(k => k.Key).ToList())
             {
-            <tr>
-                <th>
-                    @Model.Sublayer1_items.First(k => k.Key == p).Value
-                </th>
-                @{
-                    int status;
-                }
-                @foreach (var c in Model.Technology_cards)
-                {
-                    status = Model.WorkProgress.First(n => n.Id_technology_card == c.Key).Id_status;
-                    @if (status == 1)
-                    {
-                        <td class="text-center bg-success">
-                        </td>
+                <tr>
+                    <th>
+                        @Model.Sublayer1_items.First(k => k.Key == p).Value
+                    </th>
+                    @{
+                        int? status;
                     }
-                    else if (status == 2)
-                    {
-                        <td class="text-center bg-warning">
-                            @Model.WorkProgress.First(n => n.Id_technology_card == c.Key).Accept_quantity.ToString()%
-                        </td>
+                    
+                    @foreach (var card in Model.Technology_cards)
+                    {                      
+                        status = Model.WorkProgress
+                            .Where(n => n.Id_sublayer1 == p)
+                            .FirstOrDefault(n => n.Id_technology_card == card.Key)
+                            ?.Id_status;
+                        @if (status == 1)
+                        {
+                            <td class="text-center bg-success"></td>
+                        }
+                        else if (status == 2)
+                        {
+                            <td class="text-center bg-warning">
+                                @Model.WorkProgress.First(n => n.Id_technology_card == card.Key).Accept_quantity.ToString()%
+                            </td>
+                        }
+                        else if (status == 3)
+                        {
+                            <td class="text-center bg-danger ">
+                                @Model.WorkProgress.First(n => n.Id_technology_card == card.Key).Lag_days_count
+                            </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
                     }
-                    else if (status == 3)
-                    {
-                        <td class="text-center bg-danger ">
-                            @Model.WorkProgress.First(n => n.Id_technology_card == c.Key).Lag_days_count
-                        </td>
-                    }
-
-                }
-            </tr>
+                </tr>
             }
             <tr>
                 <th scope="col"> </th>
                 @{ string coloumnColor = "colorOdd";}
 
-                @foreach (var p in Model.Technology_cards)
+                @foreach (var card in Model.Technology_cards)
                 {
                     <th class= @coloumnColor>
-                        <div id="rotateText">@p.Value</div>
+                        <div id = "rotateText">@card.Value</div>
                     </th>
                     @if (coloumnColor == "colorOdd")
                     {
@@ -81,11 +87,8 @@
 
 <style type="text/css">
     #rotateText {
-        /*transform-origin: 0 0;*/
         writing-mode: vertical-lr;
         transform: rotate(-180deg);
-        /*width: 250px; ширина блока
-        height: 250px; высота блока */
     }
 
     .colorOdd

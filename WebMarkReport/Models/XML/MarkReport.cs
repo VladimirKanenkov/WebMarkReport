@@ -8,7 +8,6 @@ namespace WebMarkReport.Models
     [Serializable]
     public class MarkReport
     {
-
         //[DefaultValue("newid()")]
         //[DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]

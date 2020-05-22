@@ -15,11 +15,10 @@ namespace WebMarkReport.Controllers
     public class HomeController : Controller
     {
         private readonly ApplicationDbContext context;
-        private readonly IHostingEnvironment appEnvironment;
-        public HomeController(ApplicationDbContext _context, IHostingEnvironment _appEnvironment)
+
+        public HomeController(ApplicationDbContext _context)
         {
-            this.context = _context;
-            this.appEnvironment = _appEnvironment;          
+            this.context = _context;    
         }
 
         public IActionResult Index(int buildingId = 2, int sectionId = 4)
@@ -41,7 +40,7 @@ namespace WebMarkReport.Controllers
                 L2_name = context.Structures.First(n => n.id_l2 == sectionId).l2_name
             };
             var ids = context.Reports.Where(n => (n.id_l1 == buildingId) && (n.id_l2 == sectionId));//все строки для выборки данных в таблицу
-            tableData.Technology_cards = ids.
+            tableData.Technology_cards = context.Reports.
                 DistinctBy(n => n.id_technology_card).
                 ToDictionary(k => k.id_technology_card, v => v.technology_card_name); //использую MoreLinq DistinctBy
             tableData.Sublayer1_items = context.Structures.
@@ -64,25 +63,5 @@ namespace WebMarkReport.Controllers
             }
             return tableData;
         }
-
-        /*[HttpPost]
-        public async Task<IActionResult> AddFile(IFormFile uploadedFile)
-        {
-            if (uploadedFile != null)
-            {
-                // путь к папке Files
-                string path = "/Files/" + uploadedFile.FileName;
-                // сохраняем файл в папку Files в каталоге wwwroot
-                using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
-                {
-                    await uploadedFile.CopyToAsync(fileStream);
-                }
-                FileModel file = new FileModel { Name = uploadedFile.FileName, Path = path };
-                _context.File.Add(file);
-                _context.SaveChanges();
-            }
-
-            return RedirectToAction("Index");
-        }*/
     }
 }
